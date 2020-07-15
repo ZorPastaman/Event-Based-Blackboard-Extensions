@@ -1,0 +1,23 @@
+{
+  "name": "com.zor.event-based-blackboard-extensions",
+  "version": "1.0.0",
+  "displayName": "Event Based Blackboard Extensions",
+  "description": "Event Based Blackboard Extensions",
+  "unity": "2018.4",
+  "keywords": [
+    "data",
+    "blackboard",
+    "event based",
+    "extension",
+    "flexible",
+    "storage"
+  ],
+  "dependencies": {
+    "com.zor.event-based-blackboard": "https://github.com/ZorPastaman/Event-Based-Blackboard.git"
+  },
+  "author": {
+    "name": "Vladimir Popov",
+    "email": "zor1994@gmail.com",
+    "url": "https://github.com/ZorPastaman"
+  }
+}
