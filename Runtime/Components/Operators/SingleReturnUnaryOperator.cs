@@ -1,6 +1,7 @@
 // Copyright (c) 2019-2020 Vladimir Popov zor1994@gmail.com https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions
 
 using System;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zor.EventBasedBlackboard.Core;
@@ -29,8 +30,46 @@ namespace Zor.EventBasedBlackboard.Components.Operators
 
 		private Workers.Operating.SingleReturnUnaryOperator<TOperand, TResult> m_operator;
 
+		public BlackboardPropertyReference operand
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_Operand;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_Operand = value;
+		}
+
+		public BlackboardPropertyReference result
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_Result;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_Result = value;
+		}
+
+		public bool operateOnEnable
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_OperateOnEnable;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_OperateOnEnable = value;
+		}
+
 		[NotNull]
 		protected abstract Func<TOperand, TResult> operation { get; }
+
+		[ContextMenu("Recreate Operator")]
+		public void RecreateOperator()
+		{
+			if (m_operator == null)
+			{
+				return;
+			}
+
+			bool wasEnabled = m_operator.enabled;
+			m_operator.enabled = false;
+			Awake();
+			m_operator.enabled = wasEnabled;
+		}
 
 		private void Awake()
 		{

@@ -1,5 +1,6 @@
 // Copyright (c) 2019-2020 Vladimir Popov zor1994@gmail.com https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions
 
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zor.EventBasedBlackboard.Core;
@@ -28,11 +29,49 @@ namespace Zor.EventBasedBlackboard.Components.Converters
 
 		private Workers.Conversion.Converter<TFrom, TTo> m_converter;
 
+		public BlackboardPropertyReference from
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_From;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_From = value;
+		}
+
+		public BlackboardPropertyReference to
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_To;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_To = value;
+		}
+
+		public OnEnableBehavior onEnableBehavior
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_OnEnableBehavior;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_OnEnableBehavior = value;
+		}
+
 		/// <summary>
 		/// Conversion function.
 		/// </summary>
 		[NotNull]
 		protected abstract System.Converter<TFrom, TTo> converter { get; }
+
+		[ContextMenu("Recreate Converter")]
+		public void RecreateConverter()
+		{
+			if (m_converter == null)
+			{
+				return;
+			}
+
+			bool wasEnabled = m_converter.enabled;
+			m_converter.enabled = false;
+			Awake();
+			m_converter.enabled = wasEnabled;
+		}
 
 		private void Awake()
 		{

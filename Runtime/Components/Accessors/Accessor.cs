@@ -1,5 +1,7 @@
 // Copyright (c) 2019-2020 Vladimir Popov zor1994@gmail.com https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions
 
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Scripting;
 using Zor.EventBasedBlackboard.Core;
@@ -20,14 +22,32 @@ namespace Zor.EventBasedBlackboard.Components.Accessors
 		private BlackboardPropertyName m_propertyName;
 		private bool m_initialized;
 
-		[Preserve]
+		public BlackboardPropertyReference blackboardPropertyReference
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_Property;
+			set
+			{
+				if (m_Property == value)
+				{
+					return;
+				}
+
+				m_Property = value;
+				m_initialized = false;
+			}
+		}
+
+		[Preserve, CanBeNull]
 		public T value
 		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
 			get
 			{
 				m_Property.blackboardContainer.blackboard.TryGetValue(propertyName, out T answer);
 				return answer;
 			}
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			set => m_Property.blackboardContainer.blackboard.SetValue(propertyName, value);
 		}
 

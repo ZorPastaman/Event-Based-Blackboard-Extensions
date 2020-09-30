@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.0] - 2020-09-30
+
+### Changed
+
+- Some methods became aggressively inlined for performance reasons.
+- Some methods got a pure attribute.
+- Components became editable.
+
 ## [1.0.0] - 2020-07-15
 
 ### Added
@@ -18,5 +26,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Accessor components.
 - Applicators components.
 
-[unreleased]: https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions/releases/tag/v1.1.0
 [1.0.0]: https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions/releases/tag/v1.0.0

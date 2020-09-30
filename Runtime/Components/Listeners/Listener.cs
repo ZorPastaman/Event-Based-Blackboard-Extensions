@@ -1,5 +1,7 @@
 // Copyright (c) 2019-2020 Vladimir Popov zor1994@gmail.com https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions
 
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 using Zor.EventBasedBlackboard.Core;
@@ -28,6 +30,56 @@ namespace Zor.EventBasedBlackboard.Components.Listeners
 #pragma warning restore CS0649
 
 		private Listener<T> m_listener;
+
+		public BlackboardPropertyReference property
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_Property;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_Property = value;
+		}
+
+		public OnEnableBehavior onEnableBehavior
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_OnEnableBehavior;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_OnEnableBehavior = value;
+		}
+
+		/// <summary>
+		/// This event is called when a listened variable is changed to another value.
+		/// </summary>
+		[NotNull]
+		public TEvent onChanged
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_OnChanged;
+		}
+
+		/// <summary>
+		/// This event is called when a listened variable is removed.
+		/// </summary>
+		[NotNull]
+		public UnityEvent onRemoved
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_OnRemoved;
+		}
+
+		[ContextMenu("Recreate Listener")]
+		public void RecreateListener()
+		{
+			if (m_listener == null)
+			{
+				return;
+			}
+
+			bool wasEnabled = m_listener.enabled;
+			m_listener.enabled = false;
+			Awake();
+			m_listener.enabled = wasEnabled;
+		}
 
 		private void Awake()
 		{

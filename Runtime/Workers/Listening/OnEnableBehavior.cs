@@ -7,7 +7,7 @@ namespace Zor.EventBasedBlackboard.Workers.Listening
 	[Flags]
 	public enum OnEnableBehavior
 	{
-		InvokeOnChangedIfPropertyIsAvailable = 1,
+		InvokeOnChangedIfPropertyIsAvailable = 1 << 0,
 		InvokeOnRemovedIfPropertyIsNotAvailable = 1 << 1
 	}
 }

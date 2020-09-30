@@ -1,5 +1,7 @@
 // Copyright (c) 2019-2020 Vladimir Popov zor1994@gmail.com https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions
 
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 using Zor.EventBasedBlackboard.Workers.Listening;
@@ -24,6 +26,38 @@ namespace Zor.EventBasedBlackboard.Components.Listeners
 #pragma warning restore CS0649
 
 		private Workers.Listening.ChangedListener<T> m_listener;
+
+		public BlackboardPropertyReference property
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_Property;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_Property = value;
+		}
+
+		/// <summary>
+		/// This event is called when a listened variable is changed or removed.
+		/// </summary>
+		[NotNull]
+		public UnityEvent onDispatched
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_OnDispatched;
+		}
+
+		[ContextMenu("Recreate Listener")]
+		public void RecreateListener()
+		{
+			if (m_listener == null)
+			{
+				return;
+			}
+
+			bool wasEnabled = m_listener.enabled;
+			m_listener.enabled = false;
+			Awake();
+			m_listener.enabled = wasEnabled;
+		}
 
 		private void Awake()
 		{

@@ -1,6 +1,7 @@
 // Copyright (c) 2019-2020 Vladimir Popov zor1994@gmail.com https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions
 
 using System;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Zor.EventBasedBlackboard.Core;
 
@@ -74,6 +75,7 @@ namespace Zor.EventBasedBlackboard.Workers.Operating
 		/// <remarks>False by default.</remarks>
 		public bool enabled
 		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
 			get => m_enabled;
 			set
 			{

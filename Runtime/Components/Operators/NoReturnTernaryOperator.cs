@@ -1,6 +1,7 @@
 // Copyright (c) 2019-2020 Vladimir Popov zor1994@gmail.com https://github.com/ZorPastaman/Event-Based-Blackboard-Extensions
 
 using System;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zor.EventBasedBlackboard.Core;
@@ -31,11 +32,57 @@ namespace Zor.EventBasedBlackboard.Components.Operators
 
 		private Workers.Operating.NoReturnTernaryOperator<TFirstOperand, TSecondOperand, TThirdOperand> m_operator;
 
+		public BlackboardPropertyReference firstOperand
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_FirstOperand;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_FirstOperand = value;
+		}
+
+		public BlackboardPropertyReference secondOperand
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_SecondOperand;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_SecondOperand = value;
+		}
+
+		public BlackboardPropertyReference thirdOperand
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_ThirdOperand;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_ThirdOperand = value;
+		}
+
+		public bool operateOnEnable
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
+			get => m_OperateOnEnable;
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			set => m_OperateOnEnable = value;
+		}
+
 		/// <summary>
 		/// Operation function.
 		/// </summary>
 		[NotNull]
 		protected abstract Action<TFirstOperand, TSecondOperand, TThirdOperand> operation { get; }
+
+		[ContextMenu("Recreate Operator")]
+		public void RecreateOperator()
+		{
+			if (m_operator == null)
+			{
+				return;
+			}
+
+			bool wasEnabled = m_operator.enabled;
+			m_operator.enabled = false;
+			Awake();
+			m_operator.enabled = wasEnabled;
+		}
 
 		private void Awake()
 		{

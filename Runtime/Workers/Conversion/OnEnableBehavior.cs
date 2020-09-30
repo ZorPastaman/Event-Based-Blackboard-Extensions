@@ -7,7 +7,7 @@ namespace Zor.EventBasedBlackboard.Workers.Conversion
 	[Flags]
 	public enum OnEnableBehavior
 	{
-		InvokeConvertIfPropertyIsAvailable = 1,
+		InvokeConvertIfPropertyIsAvailable = 1 << 0,
 		InvokeConvertNothingIfPropertyIsNotAvailable = 1 << 1
 	}
 }
